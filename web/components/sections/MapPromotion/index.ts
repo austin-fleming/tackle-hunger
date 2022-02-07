@@ -1,0 +1,1 @@
+export { MapPromotion } from './MapPromotion'

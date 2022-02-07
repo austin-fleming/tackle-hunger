@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "./components/*"
+      ],
+      "@types/*": [
+        "./types/*"
+      ],
+      "@config/*": [
+        "./config/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "**/__deprecatedSections__/**"
+  ],
+  "extends": "../tsconfig.json",
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}

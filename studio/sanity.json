@@ -1,0 +1,36 @@
+{
+  "project": { "name": "Sanity Marketing TackleHunger.org" },
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas"
+    },
+    {
+      "implements": "part:@sanity/desk-tool/structure",
+      "path": "./src/deskStructure/"
+    },
+    {
+      "implements": "part:@sanity/production-preview/resolve-production-url",
+      "path": "./resolveProductionUrl.ts"
+    },
+    {
+      "implements": "part:@sanity/dashboard/config",
+      "path": "./dashboardConfig.ts"
+    }
+  ],
+  "plugins": [
+    "@sanity/base",
+    "@sanity/components",
+    "@sanity/dashboard",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool",
+    "@sanity/production-preview",
+    "asset-source-unsplash",
+    "dashboard-widget-document-list",
+    "dashboard-widget-structure-menu",
+    "github-action-deploy"
+  ],
+  "root": true,
+  "env": { "development": { "plugins": ["@sanity/vision"] } }
+}

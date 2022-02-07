@@ -1,0 +1,80 @@
+{
+  "name": "sanity-marketing-tacklehunger.org",
+  "private": true,
+  "version": "1.2.0",
+  "engines": {
+    "node": ">=0.14"
+  },
+  "workspaces": {
+    "packages": [
+      "studio",
+      "web",
+      "workers"
+    ]
+  },
+  "scripts": {
+    "build": "yarn clean:build && yarn codegen && concurrently \"yarn build:studio\" \"yarn build:web\"",
+    "build:studio": "env-cmd -e prod --no-override --use-shell \"cd studio && yarn build\"",
+    "build:web": "env-cmd -e prod --no-override --use-shell \"cd web && yarn build\"",
+    "clean": "yarn clean:build && yarn clean:nm && yarn clean:npmlock",
+    "clean:all": "yarn clean:build && yarn clean:nm && yarn clean:lock",
+    "clean:build": "yarn workspaces run clean",
+    "clean:lock": "find . -type f \\( -name *.lock -o -name *-lock.json \\) -delete",
+    "clean:nm": "find . -type d -name \"node_modules\" -exec rm -rf \"{}\" +",
+    "clean:npmlock": "find . -type f -name \"*-lock.json\" -delete",
+    "codegen": "env-cmd -e dev --no-override sanity-codegen",
+    "deploy:web:devworker": "NODE_ENV=production yarn build:web && yarn publish:web:devworker",
+    "deploy:web:prod": "NODE_ENV=production yarn build:web && yarn publish:web:prod",
+    "deploy:web:staging": "NODE_ENV=production yarn build:web && yarn publish:web:staging",
+    "deploy:studio:devworker": "NODE_ENV=production yarn build:studio && yarn publish:studio:devworker",
+    "deploy:studio:prod": "NODE_ENV=production yarn build:studio && yarn publish:studio:prod",
+    "deploy:studio:staging": "NODE_ENV=production yarn build:studio && yarn publish:studio:staging",
+    "dev": "yarn codegen && concurrently \"yarn dev:studio\" \"yarn dev:web\"",
+    "dev:studio": "env-cmd -e dev --use-shell \"cd studio && yarn dev\"",
+    "dev:web": "env-cmd -e dev --use-shell \"cd web && yarn dev\"",
+    "format": "prettier-eslint --write . \"!.next/**\" \"!node_modules/**\" \"!out/**\"",
+    "lint": "eslint .",
+    "publish:web:devworker": "wrangler publish -c web.wrangler.toml",
+    "publish:web:prod": "wrangler publish -c web.wrangler.toml -e production",
+    "publish:web:staging": "wrangler publish -c web.wrangler.toml -e staging",
+    "publish:studio:devworker": "wrangler publish -c studio.wrangler.toml",
+    "publish:studio:prod": "wrangler publish -c studio.wrangler.toml -e production",
+    "publish:studio:staging": "wrangler publish -c studio.wrangler.toml -e staging",
+    "postinstall": "yarn codegen",
+    "test": "yarn codegen && env-cmd -e staging --no-override yarn workspaces run test"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/eslint-parser": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.13",
+    "@cloudflare/wrangler": "^1.17.0",
+    "@types/node": "^14.14.25",
+    "@types/react": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.1",
+    "eslint-plugin-typescript-sort-keys": "^1.5.0",
+    "prettier": "^2.2.1",
+    "prettier-eslint-cli": "^5.0.0",
+    "sanity-codegen": "^0.9.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "env-cmd": "^10.1.0"
+  }
+}

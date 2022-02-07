@@ -1,0 +1,11 @@
+{
+  "include": [
+    "./node_modules/@sanity/base/types/**/*.ts",
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "**/__deprecated__/**"
+  ],
+  "extends": "../tsconfig.json"
+}

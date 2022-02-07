@@ -1,0 +1,22 @@
+name: Deploy Staging Studio to CF
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
+jobs:
+  build-deploy_staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ~/.cache
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-
+      - run: yarn --frozen-lockfile --ignore-optional --non-interactive
+      - env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: yarn deploy:studio:staging

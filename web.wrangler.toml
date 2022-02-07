@@ -1,0 +1,48 @@
+#
+# Required top level configuration
+#
+name = "sanity-web-dev"
+type = "webpack"
+workers_dev = false
+account_id = "9a528f69de44167d6e10333ab59f7b23"
+zone_id = "13fbfe41e9a2d508147ff299afa9de7c"
+webpack_config = "./workers/webpack.config.js"
+
+#
+# Environment Defaults (for development & pre-staging worker testing)
+#
+# -- inherited for all environments unless overridden!
+#
+route = "web-dev.sboc.us/*"
+
+[vars]
+DEBUG = "true"
+ENV_NAME = "devworker"
+GITHUB_ACTION_TOKEN = ""
+
+[site]
+bucket = "web/out"
+entry-point = "workers"
+exclude = ["**/*.map"]
+
+#
+# Staging env overrides
+#
+[env.staging]
+name = "sanity-web-staging"
+route = "web-staging.sboc.us/*"
+[env.staging.vars]
+DEBUG = "true"
+ENV_NAME = "staging"
+GITHUB_ACTION_TOKEN = ""
+
+#
+# Production env overrides
+#
+[env.production]
+name = "sanity-web-production"
+route = "web.sboc.us/*"
+[env.production.vars]
+DEBUG = "false"
+ENV_NAME = "prod"
+GITHUB_ACTION_TOKEN = ""

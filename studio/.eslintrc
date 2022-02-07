@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "sort-keys-fix/sort-keys-fix": 0,
+    "sort-imports": 0,
+    "import/prefer-default-export": 0
+  }
+}
